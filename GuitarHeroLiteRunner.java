@@ -5,7 +5,7 @@ public class GuitarHeroLiteRunner extends JFrame
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 
-	public DaRunner()
+	public GuitarHeroLiteRunner()
 	{
 		super("GuitarHeroLiteRunner");
 

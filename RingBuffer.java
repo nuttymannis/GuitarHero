@@ -24,7 +24,7 @@ public class RingBuffer {
     // You are creating a circular queue.
     // Look up how to create a cirucular queue using an array.
 	
-	private int capacity, read, write;
+	private int capacity, s, e;
 	
     //must use and array   []
 	private double[] queue;
@@ -34,8 +34,8 @@ public class RingBuffer {
     	this.capacity = capacity;
         queue = new double[capacity];
         
-        read = 0;
-        write = -1;
+        s = 0;
+        e = 0;
     }
 
     // return the capacity of this ring buffer
@@ -45,51 +45,64 @@ public class RingBuffer {
 
     // return number of items currently in this ring buffer
     public int size() {
-    	int cnt = 0;
-    	
-        for(double x : queue) {
-        	if(x != 0)
-        		cnt++;
-        }
-        
-        return cnt;
+    	if(e - s != 0)
+    		return (e - s) > 0 ? (e - s) : (capacity - s) + (s - e);
+    	else
+    		return 0;
     }
 
     // is this ring buffer empty (cap equals zero)?
     public boolean isEmpty() {
-        return write < read;
+        return size() == 0;
     }
 
     // is this ring buffer full (cap equals capacity)?
     public boolean isFull() {
-        return (write - read) + 1 == capacity;
+        return size() == capacity;
     }
 
     // adds item x to the end of this ring buffer
     public void enqueue(double x) {
     	if(!isFull()) {
-    		queue[(write + 1) % capacity] = x;
-    		write++;
+    		if(e >= queue.length && s != 0)
+    			e = 0;
+    		
+    		queue[e] = x;
+    		e++;
     	}
     }
 
     // deletes and returns the item at the read of this ring buffer
     public double dequeue() {
     	if(!isEmpty()) {
-    		double r = queue[read % capacity];
-    		read++;
-    		return r;
+    		if(s >= queue.length && e != 0)
+    			s = 0;
+    		
+    		double val = queue[s];
+    		s++;
+    		return val;
     	}
     	return 0;
     }
 
     // returns the item at the read of this ring buffer
     public double peek() {
-        return queue[read % capacity];
+        return queue[s];
     }
     
     public String toString() {
-    	return Arrays.toString(queue);
+    	double[] arr = new double[size()];
+    	int x =0;
+    	
+    	for(int i = s; i != e; i++) {
+    		if(i > queue.length - 1)
+    			i = 0;
+    		
+    		arr[x] = queue[i];
+    		x++;
+    	}
+    	
+    	return Arrays.toString(arr);
     }
     
     // tests and calls every instance method in this class
@@ -100,20 +113,10 @@ public class RingBuffer {
         	ring.enqueue(i);
         }
         
-        for(int i = 1; i < 1001; i++) {
-        	System.out.println(ring.dequeue());
-        }
+        for(int i = 1; i < 50; i++)
+        	ring.dequeue();
         
-        System.out.println(ring.peek());
-        
-        for(int i = 1; i < 1001; i++) {
-        	ring.enqueue(i*5);
-        }
-        
-        System.out.println(ring.peek());
-        ring.dequeue();
-        System.out.println(ring.peek());
-        
+        System.out.println(ring);
     }
 
 }
