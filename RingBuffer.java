@@ -46,7 +46,10 @@ public class RingBuffer {
     // return number of items currently in this ring buffer
     public int size() {
     	if(e - s != 0)
-    		return (e - s) > 0 ? (e - s) : (capacity - s) + (s - e);
+    		if(e - s > 0)
+    			return e - s;
+    		if(e - s < 0)
+    			return (capacity - s) + e;
     	else
     		return 0;
     }
@@ -58,13 +61,13 @@ public class RingBuffer {
 
     // is this ring buffer full (cap equals capacity)?
     public boolean isFull() {
-        return size() == capacity;
+        return size() == capacity - 1;
     }
 
     // adds item x to the end of this ring buffer
     public void enqueue(double x) {
     	if(!isFull()) {
-    		if(e >= queue.length && s != 0)
+    		if(e >= queue.length)
     			e = 0;
     		
     		queue[e] = x;
@@ -92,7 +95,7 @@ public class RingBuffer {
     
     public String toString() {
     	double[] arr = new double[size()];
-    	int x =0;
+    	int x = 0;
     	
     	for(int i = s; i != e; i++) {
     		if(i > queue.length - 1)
