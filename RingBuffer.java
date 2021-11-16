@@ -91,16 +91,23 @@ public class RingBuffer {
     }
     
     public String toString() {
-    	String str = "[";
+    String str = "[";
+    	int a = 0;
+    	if(e<s)
+    		 a = capacity - s + e;
+    	if(s<e)
+    		a = e - s;
     	if(size()==0)
     	{
     		str += "]";
     	}
     	else
     	{
-	    	for(int i=0;i<e-1;i++)
+	    	for(int i=s ;i < a ;i++)
 	    	{
 	    		str += queue[i] + ", ";
+	    		if(i == capacity)
+	    			i = 0;
 	    	}
 	    	str += queue[e-1] + "]";
     	}
