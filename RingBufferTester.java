@@ -77,11 +77,12 @@ public class RingBufferTester {
             System.out.println("PASSED TEST 10");
         else
             System.out.println("FAILED TEST 10");
+ 
         
         double[] data = {0.0, 1.0, 2.0, 3.0};
-        
-        for(double d : data)
+        for(double d : data) {
             rb.enqueue(d);
+        }
         
         // test 11
         System.out.print(rb + " expect [0.0, 1.0, 2.0, 3.0]: ");

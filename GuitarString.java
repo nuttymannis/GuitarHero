@@ -16,7 +16,7 @@ import java.util.Arrays;
  * to do.
  *  
  * Note: it won't compile until you fill in the constructors and methods
- *       (or at least commment out the ones whose return type is non-void).
+ *       (or at least comment out the ones whose return type is non-void).
  *
  ******************************************************************************/
 

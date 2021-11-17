@@ -15,14 +15,14 @@ import java.util.Arrays;
  * methods you need, along with descriptions of what they're supposed to do.
  *  
  * Note: it won't compile until you fill in the constructors and methods
- *       (or at least commment out the ones whose return type is non-void).
+ *       (or at least  out the ones whose return type is non-void).
  *
  ******************************************************************************/
 
 public class RingBuffer {
     // YOUR INSTANCE VARIABLES HERE
     // You are creating a circular queue.
-    // Look up how to create a cirucular queue using an array.
+    // Look up how to create a  queue using an array.
 	
 	private int capacity, s, e, size;
 	
@@ -61,26 +61,24 @@ public class RingBuffer {
 
     // adds item x to the end of this ring buffer
     public void enqueue(double x) {
-    	if(!isFull()) {
-    		if(e == queue.length)
+    		if(e == capacity)
     			e = 0;
     		
     		queue[e] = x;
     		e++;
     		size++;
-    	}
     }
 
     // deletes and returns the item at the read of this ring buffer
     public double dequeue() {
     	if(!isEmpty()) {
-    		if(s == queue.length)
+    		if(s == capacity)
     			s = 0;
     		
-    		double val = queue[s];
+    		double x = queue[s];
     		s++;
     		size--;
-    		return val;
+    		return x;
     	}
     	return 0;
     }
@@ -91,7 +89,7 @@ public class RingBuffer {
     }
     
     public String toString() {
-   	double arr[] = new double[size()];
+    	double arr[] = new double[size()];
     	int a = s;
     	for(int i = 0;i<size();i++)
     	{
