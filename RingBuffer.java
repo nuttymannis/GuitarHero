@@ -91,27 +91,16 @@ public class RingBuffer {
     }
     
     public String toString() {
-    String str = "[";
-    	int a = 0;
-    	if(e<s)
-    		 a = capacity - s + e;
-    	if(s<e)
-    		a = e - s;
-    	if(size()==0)
+   	double arr[] = new double[size()];
+    	int a = s;
+    	for(int i = 0;i<size();i++)
     	{
-    		str += "]";
+    		if(a>=capacity())
+    			a=0;
+    		arr[i]=queue[a];
+    				a++;
     	}
-    	else
-    	{
-	    	for(int i=s ;i < a ;i++)
-	    	{
-	    		str += queue[i] + ", ";
-	    		if(i == capacity)
-	    			i = 0;
-	    	}
-	    	str += queue[e-1] + "]";
-    	}
-    	return str;
+    	return Arrays.toString(arr);
     }
     
     // tests and calls every instance method in this class
