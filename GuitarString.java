@@ -16,7 +16,7 @@ import java.util.Arrays;
  * to do.
  *  
  * Note: it won't compile until you fill in the constructors and methods
- *       (or at least comment out the ones whose return type is non-void).
+ *       (or at least commment out the ones whose return type is non-void).
  *
  ******************************************************************************/
 
@@ -28,10 +28,12 @@ public class GuitarString {
 	
 	RingBuffer guitar;
 	double decay;
+	int time;
 	
     public GuitarString(double frequency) {
         guitar = new RingBuffer((int) Math.round(44100 / frequency));
         decay = .994;
+        time = 0;
         
         for(int i = 0; i < guitar.capacity(); i++) 
         	guitar.enqueue(0);
@@ -54,11 +56,11 @@ public class GuitarString {
 
     // plucks the guitar string (by replacing the buffer with white noise)
     public void pluck() {
-    	for(int i = 0; i < guitar.capacity(); i++) {
+    	for(int i = 0; i < guitar.size(); i++) {
         	guitar.dequeue();
         }
     	
-        for(int i = 0; i < guitar.capacity(); i++) {
+        for(int i = 0; i < guitar.size(); i++) {
         	double val = (Math.random() * .5) * (Math.round(Math.random()) == 1 ? 1 : -1);
         	guitar.enqueue(val);
         }
@@ -68,6 +70,11 @@ public class GuitarString {
     public void tic() {
         double avg = (guitar.dequeue() + guitar.dequeue()) / 2;
         guitar.enqueue(avg * decay);
+        time ++;
+    }
+    
+    public int time() {
+    	return time;
     }
 
     // returns the current sample
@@ -84,7 +91,6 @@ public class GuitarString {
     public static void main(String[] args) {
         GuitarString gstring = new GuitarString(440);
         gstring.pluck();
-        System.out.println(gstring);
         
         
         for(int i = 0; i < gstring.length(); i++) {
