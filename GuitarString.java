@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 /******************************************************************************
- *  Name:    
+ *  Name:    Bobby Hotary
  *  NetID:   
  *  Precept: 
  *
- *  Partner Name:    
+ *  Partner Name:    Landon, Andrew
  *  Partner NetID:   
  *  Partner Precept: 
  * 
@@ -31,11 +31,12 @@ public class GuitarString {
 	int time;
 	
     public GuitarString(double frequency) {
+    	System.out.println(44100 / frequency);
         guitar = new RingBuffer((int) Math.round(44100 / frequency));
         decay = .994;
         time = 0;
         
-        for(int i = 0; i < guitar.capacity(); i++) 
+        for(int i = 0; i < guitar.capacity() - 1; i++) 
         	guitar.enqueue(0);
     }
 
@@ -56,11 +57,11 @@ public class GuitarString {
 
     // plucks the guitar string (by replacing the buffer with white noise)
     public void pluck() {
-    	for(int i = 0; i < guitar.size(); i++) {
+    	for(int i = 0; i < guitar.capacity(); i++) {
         	guitar.dequeue();
         }
     	
-        for(int i = 0; i < guitar.size(); i++) {
+        for(int i = 0; i < guitar.capacity(); i++) {
         	double val = (Math.random() * .5) * (Math.round(Math.random()) == 1 ? 1 : -1);
         	guitar.enqueue(val);
         }
@@ -95,7 +96,7 @@ public class GuitarString {
         
         for(int i = 0; i < gstring.length(); i++) {
 	        gstring.tic();
-	        System.out.println(gstring.sample());
+	        System.out.println(i + ": " + gstring.sample());
         }
     }
 

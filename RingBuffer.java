@@ -61,7 +61,7 @@ public class RingBuffer {
 
     // adds item x to the end of this ring buffer
     public void enqueue(double x) {
-    		if(e == capacity)
+    		if(e == capacity - 1)
     			e = 0;
     		
     		queue[e] = x;
@@ -72,7 +72,7 @@ public class RingBuffer {
     // deletes and returns the item at the read of this ring buffer
     public double dequeue() {
     	if(!isEmpty()) {
-    		if(s == capacity)
+    		if(s == capacity - 1)
     			s = 0;
     		
     		double x = queue[s];
@@ -84,7 +84,7 @@ public class RingBuffer {
     }
 
     // returns the item at the read of this ring buffer
-    public double peek() {
+    public double peek(){
         return queue[s];
     }
     
