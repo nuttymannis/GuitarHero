@@ -24,21 +24,26 @@ public class GuitarStringTester {
  
         // the user types this character
         char key = kb.next().charAt(0);
-
+      
         // pluck the corresponding string
-        if (key == 'a') 
+        if (key == 'a') {
             stringA.pluck();
+        	System.out.println(stringA.Ring().toString());
+        }
         else if (key == 'c') 
             stringC.pluck();
-        
+        for(int x=0; x<Integer.MAX_VALUE;x++) {
         // compute the superposition of the samples
         double sample = stringA.sample() + stringC.sample();
 
         // send the result to standard audio
         StdAudio.play(sample);
+    
 
         // advance the simulation of each guitar string by one step
         stringA.tic();
         stringC.tic();
+        }
+        
     }
 }
