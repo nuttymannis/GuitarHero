@@ -22,81 +22,85 @@ import java.util.Arrays;
 
 public class GuitarString {
     // YOUR INSTANCE VARIABLES HERE
-
+	private RingBuffer a;
+	//private double f;
+	private int b;
     // creates a guitar string of the specified frequency,
     // using sampling rate of 44,100
-	
-	RingBuffer guitar;
-	double decay;
-	int time;
-	
     public GuitarString(double frequency) {
-        guitar = new RingBuffer((int) Math.round(44100 / frequency));
-        decay = .994;
-        time = 0;
-        
-        for(int i = 0; i < guitar.capacity(); i++) 
-        	guitar.enqueue(0);
+        // YOUR CODE HERE
+    	a = new RingBuffer((int)(44100/frequency));
+    	b=0;
+    	for(int z=0;z<(44100/frequency);z++) {
+    		a.enqueue(0);
+    	}
+    	//System.out.println(a.toString());
     }
 
     // creates a guitar string whose size and initial values are given by
     // the specified array
     public GuitarString(double[] init) {
-        guitar = new RingBuffer(init.length);
-        
-        for(int i = 0; i < guitar.capacity(); i++) {
-        	guitar.enqueue(init[i]);
-        }
+        // YOUR CODE HERE
+    	a = new RingBuffer(init.length);
+    	//System.out.println(Arrays.toString(init));
+    	for(int x=0;x<init.length;x++) {
+    		a.enqueue(init[x]);
+    	}
+    	b=0;
     }
 
     // returns the number of samples in the ring buffer
     public int length() {
-        return guitar.size();
+        // YOUR CODE HERE
+    	return a.size();
     }
 
     // plucks the guitar string (by replacing the buffer with white noise)
     public void pluck() {
-    	for(int i = 0; i < guitar.size(); i++) {
-        	guitar.dequeue();
-        }
-    	
-        for(int i = 0; i < guitar.size(); i++) {
-        	double val = (Math.random() * .5) * (Math.round(Math.random()) == 1 ? 1 : -1);
-        	guitar.enqueue(val);
-        }
+        // YOUR CODE HERE
+    	for(int y=0;y<a.size();y++) {
+    		a.dequeue();
+    		a.enqueue(Math.random()-.5);
+    	}
     }
 
     // advances the Karplus-Strong simulation one time step
     public void tic() {
-        double avg = (guitar.dequeue() + guitar.dequeue()) / 2;
-        guitar.enqueue(avg * decay);
-        time ++;
-    }
-    
-    public int time() {
-    	return time;
+        // YOUR CODE HERE
+    	double c = a.dequeue();
+    	a.enqueue(.994 *(.5*(c+ a.peek())));
+    	b++;
     }
 
     // returns the current sample
     public double sample() {
-        return guitar.peek();
+        // YOUR CODE HERE
+    	return a.peek();
+    }
+    public int Time() {
+    	return b;
+    }
+    public RingBuffer Ring() {
+    	return a;
     }
 
 
-    public String toString() {
-    	return guitar.toString();
-    }
-    
     // tests and calls every constructor and instance method in this class
     public static void main(String[] args) {
-        GuitarString gstring = new GuitarString(440);
-        gstring.pluck();
-        
-        
-        for(int i = 0; i < gstring.length(); i++) {
-	        gstring.tic();
-	        System.out.println(gstring.sample());
-        }
+        // YOUR CODE HERE
+    	GuitarString c = new GuitarString(4410);
+    	System.out.println(c.length());
+    	c.pluck();
+    	System.out.println(c.a.toString());
+    
+    	System.out.println(c.sample());
+    	double[] a = {4,2,34,5};
+    	c = new GuitarString(a);
+    	System.out.println(c.sample());
+    	c.pluck();
+    	System.out.println(c.a.toString());
+    	c.tic();
+    	System.out.println(c.a.toString());
     }
 
 }
