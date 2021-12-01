@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 /******************************************************************************
- *  Name:    
+ *  Name:Andrew Spears    
  *  NetID:   
  *  Precept: 
  *
- *  Partner Name:    
+ *  Partner Name:Bobby Hotary, Landon Miller    
  *  Partner NetID:   
  *  Partner Precept: 
  * 
@@ -29,6 +29,8 @@ public class RingBuffer {
 	public int Size;
 	private int s;
 	private int e;
+	
+	
     // creates an empty ring buffer with the specified capacity
     public RingBuffer(int capacity) {
         // YOUR CODE HERE
@@ -40,19 +42,16 @@ public class RingBuffer {
 
     // return the capacity of this ring buffer
     public int capacity() {
-        // YOUR CODE HERE
     	return cap.length - Size;
     }
 
     // return number of items currently in this ring buffer
     public int size() {
-        // YOUR CODE HERE
     	return Size;
     }
 
     // is this ring buffer empty (size equals zero)?
     public boolean isEmpty() {
-        // YOUR CODE HERE
     	if(Size==0) {
     		return true;
     	}
@@ -61,7 +60,6 @@ public class RingBuffer {
 
     // is this ring buffer full (size equals capacity)?
     public boolean isFull() {
-        // YOUR CODE HERE
     	if(Size==cap.length) {
     		return true;
     	}
@@ -70,9 +68,9 @@ public class RingBuffer {
 
     // adds item x to the end of this ring buffer
     public void enqueue(double x) {
-        // YOUR CODE HERE
     	Size++;
     	cap[e]=x;
+    	
     	if(e==cap.length-1) {
     		e=0;
     	}
@@ -86,9 +84,9 @@ public class RingBuffer {
 
     // deletes and returns the item at the front of this ring buffer
     public double dequeue() {
-        // YOUR CODE HERE
     	Size--;
     	double d = cap[s];
+    	
     	if(s==cap.length-1) {
     		s=0;
     	}
@@ -101,9 +99,10 @@ public class RingBuffer {
 
     // returns the item at the front of this ring buffer
     public double peek() {
-        // YOUR CODE HERE
     	return cap[s];
     }
+    
+    
     public String toString() {
     	if(Size==0) {
     		s=0;
@@ -111,6 +110,7 @@ public class RingBuffer {
     		return "[]";
     	}
     	int cnt=s;
+    	
     	double [] i = new double[Size];	
     	for(int x=0;x<i.length;x++) {
     		if(cnt==cap.length) {
@@ -125,11 +125,6 @@ public class RingBuffer {
     	}
     	return Arrays.toString(i);
     	
-    }
-
-    // tests and calls every instance method in this class
-    public static void main(String[] args) {
-        // YOUR CODE HERE
     }
 
 }
