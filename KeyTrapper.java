@@ -8,12 +8,22 @@ public class KeyTrapper extends Canvas implements KeyListener
 {
 	private String key;
 	
+	String keys = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ".toUpperCase();
+	char[] tim = keys.toCharArray();
+	int y = 0;
+	int x = 0;
+	int bob = (int)(Math.random()*keys.length());
+	Map<String, GuitarString> notes;
 		//this is the constructor
 	public KeyTrapper( )
 	{	
 		key = "NO VALUE YET";
 		addKeyListener( this );
 		setFocusable( true );
+		
+		notes = new HashMap<String, GuitarString>();
+		for(int x = 0; x<tim.length;x++)
+			notes.put("" + tim[x],new GuitarString(440*Math.pow(1.05956, x-24)));
 	}
 
 	public void paint( Graphics window )
@@ -42,20 +52,27 @@ public class KeyTrapper extends Canvas implements KeyListener
 		
 	public void keyPressed(KeyEvent e)
 	{
-		if( e.getKeyCode()  == KeyEvent.VK_SPACE )
-		{
-			key = "Key pressed " + e.getKeyCode();
-			repaint();
+		int l = e.getKeyCode();
+		System.out.println((char)l);
+		GuitarString k = notes.get("" + (char)l);
+		
+		System.out.println(k.Ring().toString());
+		
+		k.pluck();
+		for(int x=0; x<1024*25;x++) {
+			double sample = k.sample();
+			
+			StdAudio.play(sample);
+			
+			k.tic();
 		}
-		if( e.getKeyCode()  == KeyEvent.VK_X )
-		{
-			key = "Key pressed " + e.getKeyCode();
-			repaint();
-		}					
 	}
-				
+		
+		
 	public void keyReleased(KeyEvent e)
 	{
+
+		
 	}
 	
 

@@ -23,22 +23,31 @@ public class GuitarStringTester {
         Scanner kb = new Scanner( System.in );
  
         // the user types this character
-        char key = kb.next().charAt(0);
-
+        String key = kb.next();
+      
         // pluck the corresponding string
-        if (key == 'a') 
+        if (key.equals("a")) {
             stringA.pluck();
-        else if (key == 'c') 
+        	System.out.println(stringA.Ring().toString());
+        }
+        else if (key.equals("c")) 
             stringC.pluck();
-        
+        else if (key.equals("ac")) {
+        	stringA.pluck();
+        	stringC.pluck();
+        }
+        for(int x=0; x<Integer.MAX_VALUE;x++) {
         // compute the superposition of the samples
         double sample = stringA.sample() + stringC.sample();
 
         // send the result to standard audio
         StdAudio.play(sample);
+    
 
         // advance the simulation of each guitar string by one step
         stringA.tic();
         stringC.tic();
+        }
+        
     }
 }

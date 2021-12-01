@@ -11,116 +11,125 @@ import java.util.Arrays;
  * 
  *  Description:  
  *
- * This is a template file for RingBuffer.java. It lists the constructors and
+ * This is cap template file for RingBuffer.java. It lists the constructors and
  * methods you need, along with descriptions of what they're supposed to do.
  *  
  * Note: it won't compile until you fill in the constructors and methods
- *       (or at least  out the ones whose return type is non-void).
+ *       (or at least commment out the ones whose return type is non-void).
  *
  ******************************************************************************/
 
 public class RingBuffer {
     // YOUR INSTANCE VARIABLES HERE
-    // You are creating a circular queue.
-    // Look up how to create a  queue using an array.
-	
-	private int capacity, s, e, size;
-	
-    //must use and array   []
-	private double[] queue;
+    // You are creating cap circular queue.
+    // Look up how to create cap cirucular queue using an array.
 
+    //must use and array   []
+	private double[] cap;
+	public int Size;
+	private int s;
+	private int e;
     // creates an empty ring buffer with the specified capacity
     public RingBuffer(int capacity) {
-    	this.capacity = capacity;
-        queue = new double[capacity];
-        
-        size = 0;
-        s = 0;
-        e = 0;
+        // YOUR CODE HERE
+    	cap = new double[capacity];
+    	Size = 0;
+    	s =0;
+    	e =0;
     }
 
     // return the capacity of this ring buffer
     public int capacity() {
-        return capacity;
+        // YOUR CODE HERE
+    	return cap.length - Size;
     }
 
     // return number of items currently in this ring buffer
     public int size() {
-    	return size;
+        // YOUR CODE HERE
+    	return Size;
     }
 
-    // is this ring buffer empty (cap equals zero)?
+    // is this ring buffer empty (size equals zero)?
     public boolean isEmpty() {
-        return size() == 0;
+        // YOUR CODE HERE
+    	if(Size==0) {
+    		return true;
+    	}
+    	return false;
     }
 
-    // is this ring buffer full (cap equals capacity)?
+    // is this ring buffer full (size equals capacity)?
     public boolean isFull() {
-        return size() == capacity;
+        // YOUR CODE HERE
+    	if(Size==cap.length) {
+    		return true;
+    	}
+    	return false;
     }
 
     // adds item x to the end of this ring buffer
     public void enqueue(double x) {
-    		if(e == capacity)
-    			e = 0;
-    		
-    		queue[e] = x;
+        // YOUR CODE HERE
+    	Size++;
+    	cap[e]=x;
+    	if(e==cap.length-1) {
+    		e=0;
+    	}
+    	else {
+    	
     		e++;
-    		size++;
+    	}
+   	
+    	
     }
 
-    // deletes and returns the item at the read of this ring buffer
+    // deletes and returns the item at the front of this ring buffer
     public double dequeue() {
-    	if(!isEmpty()) {
-    		if(s == capacity)
-    			s = 0;
-    		
-    		double x = queue[s];
-    		s++;
-    		size--;
-    		return x;
+        // YOUR CODE HERE
+    	Size--;
+    	double d = cap[s];
+    	if(s==cap.length-1) {
+    		s=0;
     	}
-    	return 0;
+    	else {
+    		s++;
+    	}
+    	return d;
+    	
     }
 
-    // returns the item at the read of this ring buffer
+    // returns the item at the front of this ring buffer
     public double peek() {
-        return queue[s];
+        // YOUR CODE HERE
+    	return cap[s];
     }
-    
     public String toString() {
-    	double arr[] = new double[size()];
-    	int a = s;
-    	for(int i = 0;i<size();i++)
-    	{
-    		if(a>=capacity())
-    			a=0;
-    		arr[i]=queue[a];
-    				a++;
+    	if(Size==0) {
+    		s=0;
+    		e=0;
+    		return "[]";
     	}
-    	return Arrays.toString(arr);
+    	int cnt=s;
+    	double [] i = new double[Size];	
+    	for(int x=0;x<i.length;x++) {
+    		if(cnt==cap.length) {
+    			cnt = 0;
+    			i[x]=cap[cnt];
+    			cnt++;
+    		}
+    		else {
+    			i[x]=cap[cnt];
+    			cnt++;
+    		}
+    	}
+    	return Arrays.toString(i);
+    	
     }
-    
+
     // tests and calls every instance method in this class
     public static void main(String[] args) {
-    	RingBuffer ring = new RingBuffer(1000);
-    	
-        for(int i = 1; i < 1000; i++) {
-        	ring.enqueue(i);
-        }
-        
-        System.out.println(ring.size());
-        
-        for(int i = 1; i < 950; i++)
-        	ring.dequeue();
-        
-        System.out.println(ring.size());
-        
-        for(int i = 1; i < 500; i++) {
-        	ring.enqueue(i);
-        }
-        
-        System.out.println(ring.size());
+        // YOUR CODE HERE
     }
 
 }

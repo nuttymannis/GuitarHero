@@ -263,7 +263,7 @@ public final class StdAudio {
         }
 
         // scale increments
-        int[] steps = { 1, 2, 1, 5, 1, 8, 1, 2 };
+        int[] steps = { 0, 2, 4, 5, 7, 9, 11, 12 };
         for (int i = 0; i < steps.length; i++) {
             double hz = 440.0 * Math.pow(2, steps[i] / 12.0);
             StdAudio.play(note(hz, 1.0, 0.5));

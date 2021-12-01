@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 import javax.swing.JFrame;
 
 public class GuitarHeroLiteRunner extends JFrame
@@ -10,7 +12,7 @@ public class GuitarHeroLiteRunner extends JFrame
 		super("GuitarHeroLiteRunner");
 
 		setSize(WIDTH,HEIGHT);
-
+		
 		getContentPane().add(  new KeyTrapper() );		
 
 		setVisible(true);	
@@ -20,6 +22,7 @@ public class GuitarHeroLiteRunner extends JFrame
 
 	public static void main( String args[] )
 	{
+		
 		GuitarHeroLiteRunner run = new GuitarHeroLiteRunner();
 	}
 }
